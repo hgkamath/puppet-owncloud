@@ -28,7 +28,8 @@ It is very painful to get apache to work well with php-fpm, that's perhaps one o
 * /var/lib/owncloud/data is the owncloud data directory
 * /var/lib/owncloud/data.log /var/lib/httpd , /var/lib/php-fpm are log directories
 
-## Invitation for improvements, Troubles that need ironing out, handled manually as of creation of this git-repo.
+## Invitation for improvements
+Troubles that need ironing out, handled manually as of creation of this git-repo.
 * there is trouble between owncloud-4 and owncloud-5
 * the config hash sometimes does not match with a pre-existing owncloud database
 * some file directory permissioning
@@ -47,7 +48,7 @@ class { 'owncloud::server':
 }
 ```
 
-Other customized or param modification can be made in  
+Other customization or param modification can be made in  
 ```
 manifest/server/params.pp
 manifest/server/config.pp
