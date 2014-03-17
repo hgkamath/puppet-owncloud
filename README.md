@@ -21,7 +21,7 @@ It is very painful to get apache to work well with php-fpm, that's perhaps one o
 * will itself configure the php-fpm to run as user 'owncloud' on port 9006
 * will change ownership permission on relavant directories
 
-## directories
+## Directories
 * /etc/owncloud is where fedora puts owncloud configuration files by default  
 * /usr/share/owncloud is the rpm installs, need to be owncloud readable
 * /var/lib/owncloud is the owncloud root directory 
