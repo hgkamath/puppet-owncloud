@@ -40,15 +40,17 @@ It is very painful to get apache to work well with php-fpm, that's perhaps one o
 * harmonize/parametrize rpm/deb systems
 
 ## Configuration
-you need in our manifest the following
-
+Include in manifest the following
+```
 class { 'owncloud::server':
   mysql_password => 'changeme',
 }
+```
 
-Some params are in 
+Other customized or param modification can be made in  
+```
 manifest/server/params.pp
 manifest/server/config.pp
-
-
+templates/apache_vhost/subdirectory.erb
+```
 
