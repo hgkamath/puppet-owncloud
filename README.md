@@ -10,6 +10,19 @@ This puppet module is to deploy owncloud in fedora or fedora-like distributions.
 *note*: 
 It is very painful to get apache to work well with php-fpm, that's perhaps one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other considerations. Why apache? because its usually already there and configured.  php-fpm seems to be the prefered way inheritted from nginx 
 
+Made to work with
+* Fedora-20
+* php-fpm-5.5.9-1.fc20.x86_64
+* owncloud-5.0.14a-2.fc20.noarch
+* httpd-2.4.6-6.fc20.x86_64
+* mariadb-server-5.5.35-3.fc20.x86_64
+
+Other relavant puppet modules
+* ├── puppetlabs-apache (v0.8.1)
+* ├── puppetlabs-mysql (v2.1.0)
+* ├── thias-php (v0.3.8)
+
+
 ## SRF
 * to work with apache server
 * to work with php-fpm
