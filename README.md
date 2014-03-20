@@ -1,7 +1,7 @@
 # puppet-owncloud
 
-originally modified from<br>
- LeonB/puppet-owncloud  [https://github.com/LeonB/puppet-owncloud/blob/master/manifests/server/package.pp ]
+modified source originally from<br>
+ LeonB/puppet-owncloud  [https://github.com/LeonB/puppet-owncloud ]
 
 Feel free to pull and improve or contribute. My own understanding of puppet is minimal.
 
@@ -22,8 +22,7 @@ Other relavant puppet modules
 * ├── puppetlabs-mysql (v2.1.0)
 * ├── thias-php (v0.3.8)
 
-
-## SRF
+## desired software requirements and functionalities
 * to work with apache server
 * to work with php-fpm
 * to have a separate owncloud server that worked on a fedora based system
