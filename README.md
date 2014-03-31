@@ -33,12 +33,13 @@ Other relavant puppet modules
 * will itself configure the php-fpm to run as user 'owncloud' on port 9006
 * will change ownership permission on relavant directories
 
-## Directories
+## File and Directories
 * /etc/owncloud is where fedora puts owncloud configuration files by default  
 * /usr/share/owncloud is the rpm installs, need to be owncloud readable
 * /var/lib/owncloud is the owncloud root directory 
 * /var/lib/owncloud/data is the owncloud data directory
 * /var/lib/owncloud/data.log /var/lib/httpd , /var/lib/php-fpm are log directories
+* creates an apache vhost in configuration file /etc/httpd/conf.d/25-owncloud.conf on port 8080
 
 ## Invitation for improvements
 Troubles that need ironing out, handled manually as of creation of this git-repo.
