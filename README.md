@@ -55,9 +55,33 @@ Troubles that need ironing out, handled manually as of creation of this git-repo
 ## Configuration
 Include in manifest the following
 ```
+package { 'httpd':
+  ensure => installed,
+}
+service { 'httpd':
+  enable => true,
+  ensure => running,
+  require => Package['httpd']
+}
+apache::mod { 'unixd': }
+apache::mod { 'access_compat': }
+apache::mod { 'filter': }
+apache::mod { 'slotmem_shm': }
+apache::mod { 'proxy_fcgi': }
+apache::mod { 'systemd': }
+
+class { 
+  '::mysql::server': 
+  old_root_password => '',
+  root_password => 'changeme'
+}
+
 class { 'owncloud::server':
   mysql_password => 'changeme',
 }
+# owncloud will make its own apache vhost
+# owncloud will make its own mysql database
+
 ```
 
 Other customization or param modification can be made in  
