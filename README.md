@@ -8,7 +8,7 @@ Feel free to pull and improve or contribute. My own understanding of puppet is m
 This puppet module is to deploy owncloud in fedora or fedora-like distributions.  I had trouble with other puppet deployments because paths and otherthings can be different. Also many are based on the nginx web-server
 
 *note*: 
-It is very painful to get apache to work well with php-fpm, that's perhaps one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other considerations. Why apache? because its usually already there and configured.  php-fpm seems to be the prefered way owncloud was designed around  nginx becuase as a lightweight speed web-server nginx might not have its won internal php engine, unlike apache which has modphp. 
+It is very painful to get apache to work well with php-fpm. That could be, perhaps, one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other consideration. Why apache? because its usually already installed and configured.  php-fpm seems to be the prefered way owncloud was designed around for being able to proxy and scale up. Also, nginx is a lightweight speed web-server nginx might not have its own internal php engine, unlike apache which has modphp. 
 
 Made to work with
 * Fedora-20
@@ -94,4 +94,4 @@ templates/apache_vhost/subdirectory.erb
 After the above application of the puppet manifest, there may be minor tweaking required such as
 * file and directory ownership and permissions
 * If and whether owncloud is able to create/re-associate the owncloud database
-* Owncloud having the config hash of the mysql database
+* The Owncloud config having the config hash of the mysql database
