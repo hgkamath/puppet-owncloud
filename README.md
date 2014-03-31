@@ -91,3 +91,7 @@ manifest/server/config.pp
 templates/apache_vhost/subdirectory.erb
 ```
 
+After the above application of the puppet manifest, there may be minor tweaking required such as
+* file and directory ownership and permissions
+* If and whether owncloud is able to create/re-associate the owncloud database
+* Owncloud having the config hash of the mysql database
