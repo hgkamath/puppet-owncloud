@@ -12,7 +12,7 @@ Feel free to pull and improve or contribute. My own understanding of puppet is m
 This puppet module is to deploy owncloud in fedora or fedora-like distributions.  I had trouble with other puppet deployments because paths and otherthings can be different. Also many are based on the nginx web-server
 
 *note*: 
-It is very painful to get apache to work well with php-fpm. That could be, perhaps, one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other consideration. Why apache? because its usually already installed and configured.  php-fpm seems to be the prefered way owncloud was designed around for being able to proxy and scale up. Also, nginx is a lightweight speed web-server nginx might not have its own internal php engine, unlike apache which has modphp. 
+It is very difficult to get apache to work well with php-fpm. The redirection and proxy directives are undergoing some change and is in development with serveral bugs as for 2013. That could be, perhaps, one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other consideration. The advantage of Apache is that it is ubiquitous and usually already installed and configured.  nginx is a lightweight speed web-server nginx that does not have its own internal php engine, unlike apache which has modphp. php-fpm seems to be the prefered way owncloud was designed around in order for owncloud to be able to proxy and scale up. 
 
 Made to work with
 * Fedora-20
