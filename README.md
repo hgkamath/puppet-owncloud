@@ -1,7 +1,8 @@
 # puppet-owncloud
 
 
-Source Hosted on Github: hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
+Source Hosted on Github: 
+ <br> hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
  <br> puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
  <br> modified source originally from: LeonB/puppet-owncloud
 
