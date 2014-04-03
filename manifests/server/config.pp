@@ -51,7 +51,7 @@ class owncloud::server::config {
     #scriptalias => '/var/www/cgi-bin',
     #scriptalias => '/usr/share/cgi-bin',
     port => '8080',
-    aliases => [ { alias => '/', path => '/usr/share/owncloud' } ],
+    #aliases => [ { alias => '/', path => '/usr/share/owncloud' } ],
     directories => [ {
         path => '/usr/share/owncloud',
         allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
@@ -61,13 +61,18 @@ class owncloud::server::config {
       #  allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
       #  options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
       } ],
-    #custom_fragment => template('owncloud/apache_vhost_subdirectory.erb'),
-    proxy_pass => [], 
-    custom_fragment => '
-  DirectoryIndex index.php index.html
-  ErrorDocument 403 /core/templates/403.php
-  ErrorDocument 404 /core/templates/404.php
-  ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1',
+    custom_fragment => template('owncloud/apache_vhost_subdirectory.erb'),
+    #ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1'
+    #proxy_pass => [], 
+    #proxy_requests => 'On' , 
+#    custom_fragment => '
+#  DirectoryIndex index.php index.html
+#  #ErrorDocument 403 /core/templates/403.php
+#  #ErrorDocument 404 /core/templates/404.php
+#  #ProxyPassMatch ^/(.*\.php.*)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1
+#  RewriteCond %{REQUEST_URI} !index\.php$
+#  RewriteCond %{REQUEST_URI} \.php
+#  RewriteRule ^(/.*\.php(.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud$1 [P]',
   }
 
   mysql::db { $owncloud::server::mysql_database:
@@ -111,6 +116,12 @@ class owncloud::server::config {
     force   => true,
     require => [Class['owncloud::server::package'], File['/etc/owncloud/config.php']],
   }
+  file { "/var/lib/owncloud/tmp":
+    ensure => directory,
+    owner => "owncloud",
+    group => "owncloud",
+    mode => 755
+  }
 
   #php::fpm::pool { 'owncloud':
   #  ensure  => $owncloud::server::ensure,
@@ -129,6 +140,9 @@ class owncloud::server::config {
     #  "#php_admin_value[date.timezone] = Dollar{time_zone}",
     #  "php_admin_value[session.save_path]=/var/lib/owncloud/tmp"
     #],
+    php_flag => {
+      "zlib.output_compression" => "off",
+    },
     php_admin_flag => {
       #"log_errors" => "on",
     },
