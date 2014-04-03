@@ -1,7 +1,11 @@
 # puppet-owncloud
 
-modified source originally from<br>
- LeonB/puppet-owncloud  [https://github.com/LeonB/puppet-owncloud ]
+
+Source Hosted on: <br>
+ hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
+
+modified source originally from: <br>
+ LeonB/puppet-owncloud
 
 Feel free to pull and improve or contribute. My own understanding of puppet is minimal.
 
