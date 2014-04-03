@@ -37,7 +37,7 @@ Other relavant puppet modules
 * will change ownership permission on relavant directories
 
 ## File and Directories
-* /etc/owncloud is where fedora puts owncloud configuration files by default  
+* /etc/owncloud is where fedora puts owncloud configuration files by default. /usr/share/owncloud/config is a symbolic link to here.
 * /usr/share/owncloud is the rpm installs, need to be owncloud readable
 * /var/lib/owncloud is the owncloud root directory 
 * /var/lib/owncloud/data is the owncloud data directory
@@ -83,8 +83,8 @@ class {
 class { 'owncloud::server':
   mysql_password => 'changeme',
 }
-# owncloud will make its own apache vhost
-# owncloud will make its own mysql database
+# owncloud puppet module will make its own apache vhost
+# owncloud puppet module will make its own mysql database
 
 ```
 
