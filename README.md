@@ -3,8 +3,8 @@
 
 Source Hosted on: <br>
  hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
- puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
- <br>modified source originally from: LeonB/puppet-owncloud
+ <br> puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
+ <br> modified source originally from: LeonB/puppet-owncloud
 
 Feel free to pull and improve or contribute. My own understanding of puppet is minimal.
 
