@@ -1,7 +1,7 @@
 # puppet-owncloud
 
 
-Source Hosted on Github: Lesser Affero GPLv3 (AGPLv3 with library, linking, and combining exception)
+Source Hosted on Github: Lesser Affero GPLv3 (AGPLv3 with library, linking, and combining exception). The intent is that you may use this with other commerical or non-open systems without fear. Significant feature improvements to this software/module of relavance to users be contributed back to community.
  <br> hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
  <br> puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
  <br> modified source originally from: LeonB/puppet-owncloud
