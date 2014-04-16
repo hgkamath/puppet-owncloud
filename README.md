@@ -3,7 +3,9 @@
 
 Source Hosted on Github: Lesser Affero GPLv3 (AGPLv3 with library, linking, and combining exception). The intent is that you may use this with other commerical or non-open systems without fear. Significant fixes/feature improvements to this software/module that is of relavance to users be contributed back to community.
 
----------- Lesser AGPLv3  
+---------- 
+Lesser AGPLv3  : Linking, combining exemption.
+
 puppet-owncloud is free software, you can redistribute it and/or modify
 it under the terms of GNU Affero General Public License
 as published by the Free Software Foundation, either version 3
