@@ -12,7 +12,7 @@ as published by the Free Software Foundation, either version 3
 of the License, or (at your option) any later version.
 
 You should have received a copy of the the GNU Affero
-General Public License, along with puppet-owncloud. If not, see the file LICENSE
+General Public License, along with puppet-owncloud. If not, see the file LICENSE.AGPL
 
 Additional permission under the GNU Affero GPL version 3 section 7:
 
