@@ -15,15 +15,19 @@ It is very difficult to get apache to work well with php-fpm. The redirection an
 
 Made to work with
 * Fedora-20
-* php-fpm-5.5.9-1.fc20.x86_64
-* owncloud-5.0.14a-2.fc20.noarch
-* httpd-2.4.6-6.fc20.x86_64
-* mariadb-server-5.5.35-3.fc20.x86_64
+* httpd-2.4.9-2.fc20.x86_64
+* mariadb-server-5.5.37-1.fc20.x86_64
+* owncloud-6.0.3-1.fc20.noarch
+* php-fpm-5.5.13-3.fc20.x86_64
 
 Other relavant puppet modules
 * ├── puppetlabs-apache (v0.8.1)
 * ├── puppetlabs-mysql (v2.1.0)
 * ├── thias-php (v0.3.8)
+
+## Usable versions
+* 0.2   : httpd-2.4.9-2 , mariadb-server-5.5.37-1 , owncloud-6.0.3-1   , php-fpm-5.5.13-3 
+* 0.1.4 : httpd-2.4.6-6 , mariadb-server-5.5.35-3 , owncloud-5.0.14a-2 , php-fpm-5.5.9-1  
 
 ## desired software requirements and functionalities
 * to work with apache server
@@ -82,13 +86,29 @@ class {
 
 class { 'owncloud::server':
   mysql_password => 'changeme',
+  # $path => '/usr/share/owncloud',
+  # $data_dir => '/var/lib/owncloud',
+  # $user           => 'owncloud',
+  # $passwordsalt   => undef,
+  # $mysql_database => 'owncloud',
+  # $mysql_user     => 'owncloud',
+  # $mysql_host     => 'localhost',
+  # $apache_vhost   => false,         
 }
-# owncloud puppet module will make its own apache vhost
+# owncloud puppet module can make its own apache vhost if apache_vhost is set to true
 # owncloud puppet module will make its own mysql database
+### explanation of options
+# path: root directory containing owncloud php files
+# data_dir : root directory containing the data files that owncloud manages
+# user : username of the php-fpm process running owncloud
+# mysql_password : is the password owncloud server uses to access mysql database
+# mysql_user : username of owncloud user account inside the mysql database
+# mysql_host : is the hostname of the server hosting the mysql server
+# apache_vhost : is a boolean, if false it means you want to configure your own vhost, else if true means you want to the module to generate a vhost
 
 ```
 
-Other customization or param modification can be made in  
+Other customization or param modification can be made directly to 
 ```
 manifest/server/params.pp
 manifest/server/config.pp
