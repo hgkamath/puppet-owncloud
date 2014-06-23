@@ -28,6 +28,7 @@ class owncloud::server::params {
   $mysql_database = 'owncloud'
   $mysql_user     = 'owncloud'
   $mysql_host     = 'localhost'
+  $apache_vhost   = false
 
   $enabled = true
 

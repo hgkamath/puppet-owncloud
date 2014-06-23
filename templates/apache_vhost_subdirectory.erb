@@ -1,81 +1,54 @@
-  ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1
-  Alias /owncloud /usr/share/owncloud
-  <Directory /usr/share/owncloud>
-  #<Location /owncloud>
-    #Options ExecCGI Includes Indexes FollowSymLinks MultiViews
-    #Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1 ::1 192.168.21.0/24
-    Require all granted
+  ## Custom fragment start
 
-    # include deny.conf;
-    RewriteEngine On
+Alias /owncloud /usr/share/owncloud
+<Directory /usr/share/owncloud>
+<IfModule mod_proxy_fcgi.c>
+<IfModule mod_setenvif.c>
+<IfModule mod_headers.c>
+SetEnvIfNoCase ^Authorization$ "(.+)" XAUTHORIZATION=$1
+RequestHeader set XAuthorization %{XAUTHORIZATION}e env=XAUTHORIZATION
+</IfModule>
+</IfModule>
+</IfModule>
+ErrorDocument 403 /core/templates/403.php
+ErrorDocument 404 /core/templates/404.php
+<IfModule mod_php5.c>
+php_value upload_max_filesize 512M
+php_value post_max_size 512M
+php_value memory_limit 512M
+<IfModule mod_env.c>
+  SetEnv htaccessWorking true
+  SetEnv htaccessInConfWorking true
+</IfModule>
+</IfModule>
+<IfModule mod_rewrite.c>
+#LogLevel alert rewrite:trace3
+RewriteEngine on
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteRule ^.well-known/host-meta /public.php?service=host-meta [QSA,L]
+RewriteRule ^.well-known/carddav /remote.php/carddav/ [R]
+RewriteRule ^.well-known/caldav /remote.php/caldav/ [R]
+RewriteRule ^apps/([^/]*)/(.*\.(css|php))$ index.php?app=$1&getfile=$2 [QSA,L]
+RewriteRule ^remote/(.*) remote.php [QSA,L]
+RewriteRule ^(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1 [NE,P,E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+</IfModule>
+<IfModule mod_mime.c>
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz
+</IfModule>
+<IfModule dir_module>
+DirectoryIndex index.php index.html
+</IfModule>
+AddDefaultCharset utf-8
+Options -Indexes
+</Directory>
 
-    #nginx: client_max_body_size 10G; # set max upload size
-    #LimitRequestBody 10737418240
-    #LimitRequestBody 0
 
-    #fastcgi_buffers 64 4K;
+# http://www.ietf.org/rfc/rfc3875
+# https://bugs.php.net/bug.php?id=54152
+# https://issues.apache.org/bugzilla/show_bug.cgi?id=51517
+# http://httpd.apache.org/docs/2.4/mod/mod_proxy_fcgi.html
 
-    RewriteRule ^/owncloud/caldav(.*)$ /owncloud/remote.php/caldav$1 [redirect]
-    RewriteRule ^/owncloud/carddav(.*)$ /owncloud/remote.php/carddav$1 [redirect]
-    RewriteRule ^/owncloud/webdav(.*)$ /owncloud/remote.php/webdav$1 [redirect]
-
-    DirectoryIndex /owncloud/index.php
-    ErrorDocument 403 /owncloud/core/templates/403.php
-    ErrorDocument 404 /owncloud/core/templates/404.php
-
-    # The following 2 rules are only needed with webfinger
-    RewriteRule ^/owncloud/.well-known/host-meta /owncloud/public.php?service=host-meta [last]
-    RewriteRule ^/owncloud/.well-known/host-meta.json /owncloud/public.php?service=host-meta-json [last]
-
-    RewriteRule ^/owncloud/.well-known/carddav /owncloud/remote.php/carddav/ [redirect]
-    RewriteRule ^/owncloud/.well-known/caldav /owncloud/remote.php/caldav/ [redirect]
-
-    RewriteRule ^(/owncloud/core/doc/[^\/]+/)$ $1/index.html
-
-    RewriteRule ^/owncloud/(owncloud/)+(.*)$ /owncloud/$2 [redirect=301]
-  #</Location>
-  </Directory>
-
-  # for ios bug (double /owncloud)
-  # rewrite ^/owncloud/?(.*)$ /$1;
-  #<LocationMatch ^/owncloud/(owncloud/)+(.*)$>
-  #      RewriteRule ^/owncloud/(owncloud/)+(.*)$ /owncloud/$2 [redirect=301]
-  #</LocationMatch>
-  #
-  #<LocationMatch ^/owncloud/(data|config|\.ht|db_structure\.xml|README)>
-  #      Allow from all
-  #</LocationMatch>
-
-  # try_files $uri $uri/ index.php;
-  #<LocationMatch ^(/owncloud)(.+?\.php)(/.*)?$>
-  #      #include         fastcgi_params;
-  #      #fastcgi_pass    localhost:9006; #defined in /etc/php5/fpm/pool.d/owncloud.conf
-  #      ProxyPass fcgi://localhost:9006
-  #
-  #      # try_files       $2 = 404;
-  #      # fastcgi_param   PATH_INFO $3;
-  #      # fastcgi_param   SCRIPT_FILENAME /usr/share/owncloud/$2;
-  #      # fastcgi_param   SCRIPT_NAME $1$2;
-  #
-  #      #fastcgi_index   index.php;
-  #      # if its not a file or a directory then
-  #      RewriteCond %{REQUEST_FILENAME} !-f
-  #      RewriteCond %{REQUEST_FILENAME} !-d
-  #      RewriteRule . index.php [last]
-  #</LocationMatch>
-
-  ## Optional: set long EXPIRES header on static assets
-  #<LocationMatch ^/owncloud.+\.(jpg|jpeg|gif|bmp|ico|png|css|js|swf|svg)$>
-  #      # rewrite ^/owncloud/?(.*)$ /$1 break;
-  #      # expires 30d;
-  #      ExpiresDefault "access plus 30 days"
-  #      # Optional: Don't log access to assets
-  #      # no idea how to do the below in Apache
-  #      #access_log off
-  #      #CustomLog /dev/null
-  #      #AccessLog /dev/null 
-  #</LocationMatch>
-
+  #ProxyPassMatch ^(/.*\.php(.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud$1
+  #SetEnvIf Request_URI . proxy-fcgi-pathinfo=1
+  #ProxyPassMatch ^/(.*\.php(.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1
