@@ -120,17 +120,17 @@ class { 'owncloud::server':
 }
 ```
 
-# owncloud puppet module can make its own apache vhost if apache_vhost is set to true
-# owncloud puppet module will make its own mysql database
+* owncloud puppet module can make its own apache vhost if apache_vhost is set to true
+* owncloud puppet module will make its own mysql database
 
 ### explanation of options
-# path: root directory containing owncloud php files
-# data_dir : root directory containing the data files that owncloud manages
-# user : username of the php-fpm process running owncloud
-# mysql_password : is the password owncloud server uses to access mysql database
-# mysql_user : username of owncloud user account inside the mysql database
-# mysql_host : is the hostname of the server hosting the mysql server
-# apache_vhost : is a boolean, if false it means you want to configure your own vhost, else if true means you want to the module to generate a vhost
+* path: root directory containing owncloud php files
+* data_dir : root directory containing the data files that owncloud manages
+* user : username of the php-fpm process running owncloud
+* mysql_password : is the password owncloud server uses to access mysql database
+* mysql_user : username of owncloud user account inside the mysql database
+* mysql_host : is the hostname of the server hosting the mysql server
+* apache_vhost : is a boolean, if false it means you want to configure your own vhost, else if true means you want to the module to generate a vhost
 
 
 Other customization or param modification can be made directly to 
