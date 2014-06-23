@@ -9,7 +9,7 @@ class owncloud::server::config {
     default => $owncloud::server::ensure
   }
 
-  #users::account { $owncloud::server::user:
+  #users::account  $owncloud::server::user:
   account { $owncloud::server::user:
     ensure   => $owncloud::server::ensure,
     uid      => 560,
@@ -43,25 +43,26 @@ class owncloud::server::config {
   #file { '/var/www/html_owncloud/index.html':
   #  content => "<HTML>\n<HEAD>\n<TITLE>\nOwncloud HTTP server</TITLE>\n</HEAD>\n<BODY bgcolor=#ffffcc>\n<H1>Owncloud server</H1>\n<P>\n<A href=\"owncloud/\">Link</A>\n</BODY>\n</HTML>\n",
   #}
-  apache::vhost { 'owncloud':
-    ensure  => $owncloud::server::ensure,
-    name => 'owncloud',
-    #docroot => '/var/www/html_owncloud',
-    docroot => '/usr/share/owncloud',
-    #scriptalias => '/var/www/cgi-bin',
-    #scriptalias => '/usr/share/cgi-bin',
-    port => '8080',
-    #aliases => [ { alias => '/', path => '/usr/share/owncloud' } ],
-    directories => [ {
-        path => '/usr/share/owncloud',
-        allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
-        options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
+ ## apache::vhost { 'owncloud':
+ ##   ensure  => $owncloud::server::ensure,
+ ##   name => 'owncloud',
+ ##   #docroot => '/var/www/html_owncloud',
+ ##   docroot => '/usr/share/owncloud',
+ ##   #scriptalias => '/var/www/cgi-bin',
+ ##   #scriptalias => '/usr/share/cgi-bin',
+ ##   port => '8080',
+ ##   #aliases => [ { alias => '/', path => '/usr/share/owncloud' } ],
+ # $owncloud_apache_vhostdir = {
+ #   directories => [ {
+ #       path => '/usr/share/owncloud',
+ #       allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
+ #       options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
       #},{
       #  path => '/var/www/html_owncloud',
       #  allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
       #  options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
-      } ],
-    custom_fragment => template('owncloud/apache_vhost_subdirectory.erb'),
+#      } ],
+#    custom_fragment => template('owncloud/apache_vhost_subdirectory.erb'),
     #ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1'
     #proxy_pass => [], 
     #proxy_requests => 'On' , 
@@ -73,7 +74,23 @@ class owncloud::server::config {
 #  RewriteCond %{REQUEST_URI} !index\.php$
 #  RewriteCond %{REQUEST_URI} \.php
 #  RewriteRule ^(/.*\.php(.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud$1 [P]',
-  }
+#  }
+   $apache_vhostdir = {
+        path => $owncloud::server::path,
+        allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
+        options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
+   }
+   $apache_custfrag_template =  'owncloud/apache_vhost_subdirectory.erb'
+   if (str2bool($owncloud::server::apache_vhost)) {
+     apache::vhost { 'owncloud':
+        ensure  => $owncloud::server::ensure,
+        name => 'owncloud',
+        docroot => $owncloud::server::path,
+        port => '8080',
+        directories => [ $apache_vhostdir, ],
+        custom_fragment => template($apache_custfrag_template),
+     }
+   }
 
   mysql::db { $owncloud::server::mysql_database:
     user     => $owncloud::server::mysql_user,
@@ -83,6 +100,7 @@ class owncloud::server::config {
   }
 
   # make sure data directory is writeble by php-fpm
+  # the ensuring of account owncloud will set permissions
   #file { $owncloud::server::data_dir:
   #  ensure  => $owncloud::server::ensure,
   #  owner   => $owncloud::server::user,
@@ -121,6 +139,12 @@ class owncloud::server::config {
     owner => "owncloud",
     group => "owncloud",
     mode => 755
+  }
+  file { "/var/lib/owncloud/data":
+    ensure => directory,
+    owner => "owncloud",
+    group => "owncloud",
+    mode => 750
   }
 
   #php::fpm::pool { 'owncloud':

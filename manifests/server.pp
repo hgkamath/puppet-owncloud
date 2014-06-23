@@ -7,6 +7,7 @@ class owncloud::server(
   $mysql_user     = params_lookup( 'mysql_user' ),
   $mysql_password = params_lookup( 'mysql_password' ),
   $mysql_host     = params_lookup( 'mysql_host' ),
+  $apache_vhost   = params_lookup( 'apache_vhost'),
   $instanceid     = params_lookup( 'instanceid' ),
   $enabled        = params_lookup( 'enabled' )
   ) inherits owncloud::server::params {
