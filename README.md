@@ -1,7 +1,30 @@
 # puppet-owncloud
 
 
-Source Hosted on Github: AGPLv3
+Source Hosted on Github: Lesser Affero GPLv3 (AGPLv3 with library, linking, and combining exception). The intent is that you may use this with other commerical or non-open systems without fear. Significant fixes/feature improvements to this software/module that is of relavance to users be contributed back to community.
+
+---------- 
+Lesser AGPLv3  : Linking, combining exemption.
+
+puppet-owncloud is free software, you can redistribute it and/or modify
+it under the terms of GNU Affero General Public License
+as published by the Free Software Foundation, either version 3
+of the License, or (at your option) any later version.
+
+You should have received a copy of the the GNU Affero
+General Public License, along with puppet-owncloud. If not, see the file LICENSE.AGPLv3
+
+Additional permission under the GNU Affero GPL version 3 section 7:
+
+If you modify this Program, or any covered work, by linking or
+combining it with other code, such other code is not for that reason
+alone subject to any of the requirements of the GNU Affero GPL
+version 3.
+
+----------
+
+
+
  <br> hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
  <br> puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
  <br> modified source originally from: LeonB/puppet-owncloud
