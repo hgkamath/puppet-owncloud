@@ -17,11 +17,11 @@ class owncloud::server::params {
   ### Application related parameters
 
   $packages = $::operatingsystem ? {
-    default => 'owncloud'
+    default => [ 'mariadb-server' , 'owncloud'   , 'php-fpm' ]
   }
 
   $path = '/usr/share/owncloud'
-  $data_dir = '/var/lib/owncloud'
+  $data_dir = '/var/lib/owncloud/data'
 
   $user           = 'owncloud'
   $passwordsalt   = undef

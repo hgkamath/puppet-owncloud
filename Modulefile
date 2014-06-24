@@ -1,5 +1,5 @@
 name    'hgkamath-owncloud'
-version '0.2.0'
+version '0.2.1'
 source 'https://github.com/hgkamath/puppet-owncloud'
 author 'hgkamath'
 license 'AGPLv3'

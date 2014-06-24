@@ -1,3 +1,6 @@
 
-#0.1:20140320
-* basic working module
+#0.2.1:20140621
+* make work for owncloud 6
+
+#0.1.4:20140320
+* basic working module worked for owncloud 5

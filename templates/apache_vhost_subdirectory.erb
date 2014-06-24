@@ -30,7 +30,7 @@ RewriteRule ^.well-known/carddav /remote.php/carddav/ [R]
 RewriteRule ^.well-known/caldav /remote.php/caldav/ [R]
 RewriteRule ^apps/([^/]*)/(.*\.(css|php))$ index.php?app=$1&getfile=$2 [QSA,L]
 RewriteRule ^remote/(.*) remote.php [QSA,L]
-RewriteRule ^(.*\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1 [NE,P,E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+RewriteRule ^(.*?\.php(/.*)?)$ fcgi://127.0.0.1:9006/usr/share/owncloud/$1 [NE,P,E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 </IfModule>
 <IfModule mod_mime.c>
 AddType image/svg+xml svg svgz

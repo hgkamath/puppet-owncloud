@@ -77,7 +77,9 @@ class owncloud::server::config {
 #  }
    $apache_vhostdir = {
         path => $owncloud::server::path,
-        allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
+        auth_require => 'ip 127.0.0.1 ::1 192.168.21.0/24',
+        #order => 'Allow,Deny',
+        #allow => 'from 127.0.0.1 ::1 192.168.21.0/24',
         options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
    }
    $apache_custfrag_template =  'owncloud/apache_vhost_subdirectory.erb'
@@ -140,12 +142,13 @@ class owncloud::server::config {
     group => "owncloud",
     mode => 755
   }
-  file { "/var/lib/owncloud/data":
-    ensure => directory,
-    owner => "owncloud",
-    group => "owncloud",
-    mode => 750
-  }
+  # account creation will make this directory
+  #file { "/var/lib/owncloud/data":
+  #  ensure => directory,
+  #  owner => "owncloud",
+  #  group => "owncloud",
+  #  mode => 750
+  #}
 
   #php::fpm::pool { 'owncloud':
   #  ensure  => $owncloud::server::ensure,

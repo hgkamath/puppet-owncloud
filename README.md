@@ -44,12 +44,12 @@ Made to work with
 * php-fpm-5.5.13-3.fc20.x86_64
 
 Other relavant puppet modules
-* ├── puppetlabs-apache (v0.8.1)
+* ├── puppetlabs-apache (v1.0.1)
 * ├── puppetlabs-mysql (v2.1.0)
 * ├── thias-php (v0.3.8)
 
 ## Usable versions
-* 0.2   : httpd-2.4.9-2 , mariadb-server-5.5.37-1 , owncloud-6.0.3-1   , php-fpm-5.5.13-3 
+* 0.2.1 : httpd-2.4.9-2 , mariadb-server-5.5.37-1 , owncloud-6.0.3-1   , php-fpm-5.5.13-3 
 * 0.1.4 : httpd-2.4.6-6 , mariadb-server-5.5.35-3 , owncloud-5.0.14a-2 , php-fpm-5.5.9-1  
 
 ## desired software requirements and functionalities
@@ -109,6 +109,8 @@ class {
 
 class { 'owncloud::server':
   mysql_password => 'changeme',
+  passwordsalt => undef,
+  instanceid => undef,
   # $path => '/usr/share/owncloud',
   # $data_dir => '/var/lib/owncloud',
   # $user           => 'owncloud',
@@ -127,6 +129,9 @@ class { 'owncloud::server':
 * path: root directory containing owncloud php files
 * data_dir : root directory containing the data files that owncloud manages
 * user : username of the php-fpm process running owncloud
+* packages : lists the packages to install owncloud as per the host linux distribution
+* passwordsalt : salt that is used to randomize saved passwords in the owncloud database
+* instanceid : an instance id that uniquely identifies and instance of owncloud
 * mysql_password : is the password owncloud server uses to access mysql database
 * mysql_user : username of owncloud user account inside the mysql database
 * mysql_host : is the hostname of the server hosting the mysql server
