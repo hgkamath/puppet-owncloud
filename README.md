@@ -94,12 +94,34 @@ service { 'httpd':
   ensure => running,
   require => Package['httpd']
 }
-apache::mod { 'unixd': }
+
 apache::mod { 'access_compat': }
-apache::mod { 'filter': }
 apache::mod { 'slotmem_shm': }
+apache::mod { 'proxy': }
 apache::mod { 'proxy_fcgi': }
-apache::mod { 'systemd': }
+
+apache::vhost { 'owncloud':
+    ensure  => present,
+    name => 'owncloud',
+    docroot => '/var/www/html2',
+    port => '8920',
+    directories => [ {
+        path => '/var/www/html2',
+        auth_require => 'ip 127.0.0.1 ::1',
+        options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
+      },
+       $owncloud::server::config::apache_vhostdir,
+       ],
+    custom_fragment => join( [ template($owncloud::server::config::apache_custfrag_template),
+        '
+<Location /balancer-manager> 
+    SetHandler balancer-manager 
+    Order allow,deny
+    Allow from 127.0.0.1 ::1
+</Location> 
+ProxyStatus On' , ] )
+}
+
 
 class { 
   '::mysql::server': 
