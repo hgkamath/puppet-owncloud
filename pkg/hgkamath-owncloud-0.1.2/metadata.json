@@ -1,0 +1,31 @@
+{
+  "name": "hgkamath-owncloud",
+  "version": "0.1.2",
+  "source": "https://github.com/hgkamath/puppet-owncloud",
+  "author": "hgkamath",
+  "license": "AGPLv3",
+  "summary": "to deploy owncloud in fedora or fedora-like distributions with apache php-fpm mysql",
+  "description": "to deploy owncloud in fedora or fedora-like distributions with apache php-fpm mysql",
+  "project_page": "https://github.com/hgkamath/puppet-owncloud",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CHANGELOG": "69318258ea0debb026e62f1e58b0ff9c",
+    "Modulefile": "f6c0a99c4cf3e449e47fb82637eedb4f",
+    "README": "9b7c7ae383e7474b9c43e1b85de67659",
+    "README.md": "d8e88df34d3cba39441991e861746cd1",
+    "manifests/server/config.pp": "79f2548937cffe131c695bc9c0244343",
+    "manifests/server/package.pp": "b95accb58390bf58dc4651571ae5918a",
+    "manifests/server/params.pp": "db0cd5ff36fe2fdcd24d390cc01866b2",
+    "manifests/server.pp": "63a38d7a2e4203477c79a219661fdb05",
+    "spec/spec_helper.rb": "a55d1e6483344f8ec6963fcb2c220372",
+    "templates/apache_vhost_subdirectory.erb": "cd3f8fdfebbf6a8436f0858a725d72c7",
+    "templates/config.php.erb": "9c649fad6094dee3e2abf62d259b711a",
+    "templates/nginx_vhost_subdirectory.erb": "d2dd6b715c4da54278d9d969185d1615",
+    "templates/nginx_vhost_subdomain.erb": "6a10c3e037c9142f0f3a911e2a9b669b"
+  }
+}

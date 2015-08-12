@@ -1,5 +1,5 @@
 name    'hgkamath-owncloud'
-version '0.2.2'
+version '0.1.2'
 source 'https://github.com/hgkamath/puppet-owncloud'
 author 'hgkamath'
 license 'AGPLv3'
@@ -16,10 +16,10 @@ project_page 'https://github.com/hgkamath/puppet-owncloud'
 # dependency 'thias/php', '>= 0.3.8'
 # 
 # Fedora-20
-# httpd-2.4.9-2.fc20.x86_64
-# mariadb-server-5.5.37-1.fc20.x86_64
-# owncloud-6.0.3-1.fc20.noarch
-# php-fpm-5.5.13-3.fc20.x86_64
+# php-fpm-5.5.9-1.fc20.x86_64
+# owncloud-5.0.14a-2.fc20.noarch
+# httpd-2.4.6-6.fc20.x86_64
+# mariadb-server-5.5.35-3.fc20.x86_64
 
 # http://docs.puppetlabs.com/guides/style_guide.html#module-metadata
 #

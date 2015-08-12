@@ -37,19 +37,18 @@ This puppet module is to deploy owncloud in fedora or fedora-like distributions.
 It is very difficult to get apache to work well with php-fpm. The redirection and proxy directives are undergoing some change and is in development with serveral bugs as for 2013. That could be, perhaps, one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other consideration. The advantage of Apache is that it is ubiquitous and usually already installed and configured.  nginx is a lightweight speed web-server nginx that does not have its own internal php engine, unlike apache which has modphp. php-fpm seems to be the prefered way owncloud was designed around in order for owncloud to be able to proxy and scale up. 
 
 Made to work with
-* Fedora-22
-* httpd-2.4.16-1.fc22.x86_64
-* mariadb-server-10.0.20-1.fc22.x86_64
-* owncloud-8.0.5-1.fc22.noarch
-* php-fpm-5.6.11-2.fc22.x86_64
+* Fedora-20
+* httpd-2.4.9-2.fc20.x86_64
+* mariadb-server-5.5.37-1.fc20.x86_64
+* owncloud-6.0.3-1.fc20.noarch
+* php-fpm-5.5.13-3.fc20.x86_64
 
 Other relavant puppet modules
-* ├── puppetlabs-apache (v1.6.0)
-* ├── puppetlabs-mysql (v3.5.0)
-* ├── thias-php (v1.1.1)
+* ├── puppetlabs-apache (v1.0.1)
+* ├── puppetlabs-mysql (v2.1.0)
+* ├── thias-php (v0.3.8)
 
 ## Usable versions
-* 0.2.2 : httpd-2.4.16-1, mariadb-server-10.0.20-1, owncloud-8.0.5-1   , php-fpm-5.6.11-2 
 * 0.2.1 : httpd-2.4.9-2 , mariadb-server-5.5.37-1 , owncloud-6.0.3-1   , php-fpm-5.5.13-3 
 * 0.1.4 : httpd-2.4.6-6 , mariadb-server-5.5.35-3 , owncloud-5.0.14a-2 , php-fpm-5.5.9-1  
 
@@ -126,9 +125,8 @@ ProxyStatus On' , ] )
 
 class { 
   '::mysql::server': 
-  #old_root_password => '',
-  root_password => 'changeme',
-  service_enabled => true,
+  old_root_password => '',
+  root_password => 'changeme'
 }
 
 class { 'owncloud::server':

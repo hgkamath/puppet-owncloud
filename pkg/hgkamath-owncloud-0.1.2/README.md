@@ -1,30 +1,7 @@
 # puppet-owncloud
 
 
-Source Hosted on Github: Lesser Affero GPLv3 (AGPLv3 with library, linking, and combining exception). The intent is that you may use this with other commerical or non-open systems without fear. Significant fixes/feature improvements to this software/module that is of relavance to users be contributed back to community.
-
----------- 
-Lesser AGPLv3  : Linking, combining exemption.
-
-puppet-owncloud is free software, you can redistribute it and/or modify
-it under the terms of GNU Affero General Public License
-as published by the Free Software Foundation, either version 3
-of the License, or (at your option) any later version.
-
-You should have received a copy of the the GNU Affero
-General Public License, along with puppet-owncloud. If not, see the file LICENSE.AGPLv3
-
-Additional permission under the GNU Affero GPL version 3 section 7:
-
-If you modify this Program, or any covered work, by linking or
-combining it with other code, such other code is not for that reason
-alone subject to any of the requirements of the GNU Affero GPL
-version 3.
-
-----------
-
-
-
+Source Hosted on Github: 
  <br> hgkamath/puppet-owncloud  [https://github.com/hgkamath/puppet-owncloud ]
  <br> puppetforge: [https://forge.puppetlabs.com/hgkamath/owncloud]
  <br> modified source originally from: LeonB/puppet-owncloud
@@ -37,21 +14,16 @@ This puppet module is to deploy owncloud in fedora or fedora-like distributions.
 It is very difficult to get apache to work well with php-fpm. The redirection and proxy directives are undergoing some change and is in development with serveral bugs as for 2013. That could be, perhaps, one of the main reasons for sysadms to prefer nginx, the high performance of the simpler nginx being the other consideration. The advantage of Apache is that it is ubiquitous and usually already installed and configured.  nginx is a lightweight speed web-server nginx that does not have its own internal php engine, unlike apache which has modphp. php-fpm seems to be the prefered way owncloud was designed around in order for owncloud to be able to proxy and scale up. 
 
 Made to work with
-* Fedora-22
-* httpd-2.4.16-1.fc22.x86_64
-* mariadb-server-10.0.20-1.fc22.x86_64
-* owncloud-8.0.5-1.fc22.noarch
-* php-fpm-5.6.11-2.fc22.x86_64
+* Fedora-20
+* php-fpm-5.5.9-1.fc20.x86_64
+* owncloud-5.0.14a-2.fc20.noarch
+* httpd-2.4.6-6.fc20.x86_64
+* mariadb-server-5.5.35-3.fc20.x86_64
 
 Other relavant puppet modules
-* ├── puppetlabs-apache (v1.6.0)
-* ├── puppetlabs-mysql (v3.5.0)
-* ├── thias-php (v1.1.1)
-
-## Usable versions
-* 0.2.2 : httpd-2.4.16-1, mariadb-server-10.0.20-1, owncloud-8.0.5-1   , php-fpm-5.6.11-2 
-* 0.2.1 : httpd-2.4.9-2 , mariadb-server-5.5.37-1 , owncloud-6.0.3-1   , php-fpm-5.5.13-3 
-* 0.1.4 : httpd-2.4.6-6 , mariadb-server-5.5.35-3 , owncloud-5.0.14a-2 , php-fpm-5.5.9-1  
+* ├── puppetlabs-apache (v0.8.1)
+* ├── puppetlabs-mysql (v2.1.0)
+* ├── thias-php (v0.3.8)
 
 ## desired software requirements and functionalities
 * to work with apache server
@@ -95,74 +67,28 @@ service { 'httpd':
   ensure => running,
   require => Package['httpd']
 }
-
+apache::mod { 'unixd': }
 apache::mod { 'access_compat': }
+apache::mod { 'filter': }
 apache::mod { 'slotmem_shm': }
-apache::mod { 'proxy': }
 apache::mod { 'proxy_fcgi': }
-
-apache::vhost { 'owncloud':
-    ensure  => present,
-    name => 'owncloud',
-    docroot => '/var/www/html2',
-    port => '8920',
-    directories => [ {
-        path => '/var/www/html2',
-        auth_require => 'ip 127.0.0.1 ::1',
-        options => ['ExecCGI', 'Includes', 'Indexes','FollowSymLinks','MultiViews'], 
-      },
-       $owncloud::server::config::apache_vhostdir,
-       ],
-    custom_fragment => join( [ template($owncloud::server::config::apache_custfrag_template),
-        '
-<Location /balancer-manager> 
-    SetHandler balancer-manager 
-    Order allow,deny
-    Allow from 127.0.0.1 ::1
-</Location> 
-ProxyStatus On' , ] )
-}
-
+apache::mod { 'systemd': }
 
 class { 
   '::mysql::server': 
-  #old_root_password => '',
-  root_password => 'changeme',
-  service_enabled => true,
+  old_root_password => '',
+  root_password => 'changeme'
 }
 
 class { 'owncloud::server':
   mysql_password => 'changeme',
-  passwordsalt => undef,
-  instanceid => undef,
-  # $path => '/usr/share/owncloud',
-  # $data_dir => '/var/lib/owncloud',
-  # $user           => 'owncloud',
-  # $passwordsalt   => undef,
-  # $mysql_database => 'owncloud',
-  # $mysql_user     => 'owncloud',
-  # $mysql_host     => 'localhost',
-  # $apache_vhost   => false,         
 }
+# owncloud puppet module will make its own apache vhost
+# owncloud puppet module will make its own mysql database
+
 ```
 
-* owncloud puppet module can make its own apache vhost if apache_vhost is set to true
-* owncloud puppet module will make its own mysql database
-
-### explanation of options
-* path: root directory containing owncloud php files
-* data_dir : root directory containing the data files that owncloud manages
-* user : username of the php-fpm process running owncloud
-* packages : lists the packages to install owncloud as per the host linux distribution
-* passwordsalt : salt that is used to randomize saved passwords in the owncloud database
-* instanceid : an instance id that uniquely identifies and instance of owncloud
-* mysql_password : is the password owncloud server uses to access mysql database
-* mysql_user : username of owncloud user account inside the mysql database
-* mysql_host : is the hostname of the server hosting the mysql server
-* apache_vhost : is a boolean, if false it means you want to configure your own vhost, else if true means you want to the module to generate a vhost
-
-
-Other customization or param modification can be made directly to 
+Other customization or param modification can be made in  
 ```
 manifest/server/params.pp
 manifest/server/config.pp

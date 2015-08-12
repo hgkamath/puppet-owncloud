@@ -1,6 +1,4 @@
 <?php
-
-# for more options see OwncloudInstallRoot/config/config.sample.php
 $CONFIG = array (
   'overwritewebroot' => '/owncloud',
   'passwordsalt' => '<%= scope.lookupvar('owncloud::server::passwordsalt') %>',
@@ -18,22 +16,4 @@ $CONFIG = array (
   'instanceid' => '<%= scope.lookupvar('owncloud::server::instanceid') %>',
   'theme' => '',
   'maintenance' => false,
-  "apps_paths" => array(
-        0 =>
-        array (
-            'path'=> '/usr/share/owncloud/apps',
-            'url' => '/apps',
-            'writable' => false,
-        ),
-        1 =>
-        array (
-            'path' => '/var/lib/owncloud/apps',
-            'url' => '/apps2',
-            'writable' => true,
-        ),
-    ),
-  'trusted_domains' => 
-  array (
-    0 => '192.168.21.1',
-  ),
 );

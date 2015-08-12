@@ -1,15 +1,16 @@
 class owncloud::server(
-  $packages       = params_lookup( 'packages' ),
-  $path           = params_lookup( 'path' ),
-  $user           = params_lookup( 'user' ),
-  $passwordsalt   = params_lookup( 'passwordsalt' ),
-  $mysql_database = params_lookup( 'mysql_database' ),
-  $mysql_user     = params_lookup( 'mysql_user' ),
-  $mysql_password = params_lookup( 'mysql_password' ),
-  $mysql_host     = params_lookup( 'mysql_host' ),
-  $apache_vhost   = params_lookup( 'apache_vhost'),
-  $instanceid     = params_lookup( 'instanceid' ),
-  $enabled        = params_lookup( 'enabled' )
+  $packages       = [ 'mariadb-server' , 'owncloud'   , 'php-fpm' ],
+  $path           = $owncloud::server::params::path,
+  $data_dir       = $owncloud::server::params::data_dir,
+  $user           = $owncloud::server::params::user,
+  $passwordsalt   = $owncloud::server::params::passwordalt,
+  $mysql_database = $owncloud::server::params::mysql_database,
+  $mysql_user     = $owncloud::server::params::mysql_user,
+  $mysql_password = $owncloud::server::params::mysql_password,
+  $mysql_host     = $owncloud::server::params::mysql_host,
+  $apache_vhost   = $owncloud::server::params::apache_vhost,
+  $instanceid     = $owncloud::server::params::instanceid,
+  $enabled        = $owncloud::server::params::enabled
   ) inherits owncloud::server::params {
 
     $ensure = $enabled ? {
