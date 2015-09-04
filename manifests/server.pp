@@ -1,3 +1,7 @@
+
+
+# Install and configure an owncloud server
+# default parameters are retrieved from owncloud::server::params
 class owncloud::server(
   $packages       = [ 'mariadb-server' , 'owncloud'   , 'php-fpm' ],
   $path           = $owncloud::server::params::path,

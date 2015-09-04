@@ -1,3 +1,7 @@
+
+# This class is used to download/install the necessary packages for the
+# owncloud server
+# currently this class is not used
 class owncloud::server::package {
 
   # package  { $owncloud::server::packages:
